@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 let tasks = require("../data/tasks");
+const validateTaskBody = require("../middlewares/validateTaskBody");
 
 // Crear una tarea
-router.post("/", (req, res) => {
+router.post("/", validateTaskBody, (req, res) => {
   const { description } = req.body;
 
   const newTask = {
@@ -24,7 +25,7 @@ router.delete("/:id", (req, res) => {
 });
 
 // Actualizar una tarea por id
-router.put("/:id", (req, res) => {
+router.put("/:id", validateTaskBody, (req, res) => {
   const id = Number(req.params.id);
   const { description, isCompleted } = req.body;
 
@@ -41,5 +42,3 @@ router.put("/:id", (req, res) => {
 });
 
 module.exports = router;
-
-
